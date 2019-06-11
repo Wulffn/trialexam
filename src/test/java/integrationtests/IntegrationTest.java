@@ -74,15 +74,15 @@ public class IntegrationTest {
         given().when().get("/").then().statusCode(200);
     }
 
-    @Test
-    public void testRestNoAuthenticationRequired() {
-        given()
-                .contentType("application/json")
-                .when()
-                .get("/api/info").then()
-                .statusCode(200)
-                .body("msg", equalTo("Hello anonymous"));
-    }
+//    @Test
+//    public void testRestNoAuthenticationRequired() {
+//        given()
+//                .contentType("application/json")
+//                .when()
+//                .get("/api/info").then()
+//                .statusCode(200)
+//                .body("msg", equalTo("Hello anonymous"));
+//    }
 
     @Test
     public void testRestForAdmin() {

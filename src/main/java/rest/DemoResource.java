@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import entity.User;
+import facade.Facade;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -51,13 +52,16 @@ public class DemoResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("availablecars/{week}/{address}")
     public String getAvailCars(@PathParam("week") int week, @PathParam("address") String address) {
+        Facade.saveHistory(week, address);
         return getCars(week, address);
     }
-
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getInfoForAll() {
-        return "{\"msg\":\"Hello anonymous\"}";
+    @Path("history")
+    @RolesAllowed("admin")
+    public String getHistory() {
+        return new Gson().toJson(Facade.getHistory());
     }
 
     //Just to verify if the database is setup
@@ -140,9 +144,5 @@ public class DemoResource {
             }
         });
         return res.toString();
-    }
-    
-    public static void main(String[] args) {
-        System.out.println(getCars(1, "cph-airport"));
     }
 }
